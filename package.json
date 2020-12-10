@@ -1,0 +1,14 @@
+{
+  "name": "bot-teste",
+  "version": "1.0.0",
+  "description": "uma bot ai",
+  "main": "index.js",
+  "scripts": {
+    "test": "testando 123..."
+  },
+  "author": "bingo",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  }
+}

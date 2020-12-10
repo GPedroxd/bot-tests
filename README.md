@@ -1,0 +1,1 @@
+estudando node.js e aprendendo a usar o lib do discord com um botzin bem do mais ou menos
