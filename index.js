@@ -18,22 +18,25 @@ client.once('ready', () => {
 	console.log('Ready!');
 });
 
-/*client.on('message', message =>{
-    if (message.content.startsWith(`${prefix}test`)) {
-        let embed = new Discord.MessageEmbed()
+client.on('guildMemberAdd', async(member)=>{
+	console.log('é');
+    let guild = client.guilds.cache.get("619613533407019009");
+    let channel = client.channels.cache.get("729797123649830912");
+    if(guild == member.guild){
+		let embed = new Discord.MessageEmbed()
         embed.setColor('#8a5fb0')
-        embed.setAuthor('Teste', 'https://lh3.googleusercontent.com/proxy/R5nzyRvNOTr4seQVpd-tOP0amg832g1SRiU-WDQ1e9SxM1dMTPGCDGm4Im5kSUcT-NVtwwToGrtR-F2HgF84guMfguatcM_OftVuTFMHwKu1UFIrs5XPhvfI1CxX2hL28K-kF9CO7WOh3Q')
+        embed.setAuthor(member.user.tag, member.user.displayAvatarURL())
         embed.setTitle('Boas-Vindas')
-        embed.setImage('https://thumbs.gfycat.com/FrayedNimbleCat-max-1mb.gif')
-        embed.setDescription(`Bem vindo(a), ${message.author}!!!`)
+        embed.setImage('https://thumbs.gfycat.com/AffectionateCheapFeline-small.gif')
+        embed.setDescription(`Bem vindo(a), ${member.user}!!! Leia as <#729795085788643408> e faça seu <#729795259340685414>. Divirta-se`)
         embed.addField('Canais', 'Leia as <#729795085788643408> \n Faça seu <#729795259340685414>. Divirta-se')
-        embed.setThumbnail('https://lh3.googleusercontent.com/proxy/R5nzyRvNOTr4seQVpd-tOP0amg832g1SRiU-WDQ1e9SxM1dMTPGCDGm4Im5kSUcT-NVtwwToGrtR-F2HgF84guMfguatcM_OftVuTFMHwKu1UFIrs5XPhvfI1CxX2hL28K-kF9CO7WOh3Q')
-        embed.setTimestamp();
-        message.channel.send(embed)
+        embed.setThumbnail(member.user.displayAvatarURL({dynamic: true, format: "png", size : 1024}))
+        embed.setTimeStamp()
+        await channel.send(embed);
     }
-});*/
+});
 
-client.on('message', message => {
+client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -86,24 +89,5 @@ client.on('message', message => {
 	}
 });
 
-
-client.on("guildMemberAdd", async(member)=>{
-    let guild = client.guilds.cache.get("");
-    let channel = client.channels.channel.get("729797123649830912");
-    if(guild == member.guild){
-        //channel.send(`Bem vindo(a), ${member.user}!!! Leia as <#729795085788643408> e faça seu <#729795259340685414>. Divirta-se`);
-        let embed = new Discord.MessageEmbed()
-        embed.setColor('#8a5fb0')
-        embed.setAuthor(member.user.tag, member.user.displayAvatarURL())
-        embed.setTitle('Boas-Vindas')
-        embed.setImage('https://thumbs.gfycat.com/FrayedNimbleCat-max-1mb.gif')
-        embed.setDescription(`Bem vindo(a), ${member.user}!!! Leia as <#729795085788643408> e faça seu <#729795259340685414>. Divirta-se`)
-        embed.addField('Canais', 'Leia as <#729795085788643408> \n Faça seu <#729795259340685414>. Divirta-se')
-        embed.setThumbnail(member.user.displayAvatarURL({dynamic: true, format: "png", size : 1024}))
-        embed.setTimeStamp()
-        await channel.send(embed);
-    }
-    
-});
 
 client.login(token);

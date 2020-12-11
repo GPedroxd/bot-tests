@@ -9,6 +9,11 @@
   "author": "bingo",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "@discordjs/opus": "^0.3.3",
+    "discord.js": "^12.5.1",
+    "ffmpeg-static": "^4.2.7",
+    "sodium": "^3.0.2",
+    "ytdl-core": "^3.4.2",
+    "ytdl-core-discord": "^1.2.4"
   }
 }
