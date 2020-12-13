@@ -8,24 +8,20 @@ module.exports = {
 async function play(message, args) {
     console.log(args);
     if (message.member.voice.channel) {
-        const ytdl = require('ytdl-core-discord');
-        const { OpusEncoder } = require('@discordjs/opus');
-        const fs = require('fs');
-
-        const connection = await message.member.voice.channel.join();
-        const dispatcher = connection.play('nirvana.mp3');
-        connection.play('nirvana.mp3', { volume: 1 });
-        console.log(dispatcher);
-        dispatcher.on('start', () => {
-            console.log('ja é alguma coisa');
+        const ytdl = require('ytdl-core');
+        message.member.voice.channel.join().then(connection =>{
+            console.log('conectado!');
+            const stream = ytdl(args[0], {filter: "audioonly",
+                                        quality: "highestaudio",
+                                        volume: 0.5});
+            console.log('stream criada!');
+            const dispatcher = connection.play(stream);
+            console.log('ta tocando?');
+            dispatcher.on('start', ()=> console.log('começou'));
+            dispatcher.on('finish', () => console.log('acabou!!!'));
+            dispatcher.on('error', console.error);
         });
-        dispatcher.pause();
-        dispatcher.resume();
-        dispatcher.on('finish', () => {
-            console.log('não é alguma coisa');
-        });
-        dispatcher.on('error', console.error);
     } else {
-        message.channel.send('não okay!');
+        message.channel.send('entra numa call primeiro, animal.');
     }
 }
