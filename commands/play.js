@@ -1,27 +1,41 @@
+var queue = [];
 module.exports = {
     'name': 'play',
     'description': 'toca uma musica',
     execute(message, args) {
-        play(message, args);
+        if (message.member.voice.channel) {
+            if(queue.length > 0){
+                queue.push(args[0]);
+                message.channel.send('Essa musica está na posição ' + (queue.length - 1)  + ' da fila.');
+            }else{
+                queue.push(args[0]);
+                play(message);
+            }
+        } else {
+            message.channel.send('entra numa call primeiro, animal.');
+        }
     }
 }
-async function play(message, args) {
-    console.log(args);
-    if (message.member.voice.channel) {
-        const ytdl = require('ytdl-core');
-        message.member.voice.channel.join().then(connection =>{
-            console.log('conectado!');
-            const stream = ytdl(args[0], {filter: "audioonly",
-                                        quality: "highestaudio",
-                                        volume: 0.5});
-            console.log('stream criada!');
-            const dispatcher = connection.play(stream);
-            console.log('ta tocando?');
-            dispatcher.on('start', ()=> console.log('começou'));
-            dispatcher.on('finish', () => console.log('acabou!!!'));
-            dispatcher.on('error', console.error);
+const ytdl = require('ytdl-core');
+async function play(message) {
+    message.member.voice.channel.join().then(connection => {
+        const stream =  ytdl(queue[0], {
+            filter: "audioonly",
+            quality: "highestaudio",
         });
-    } else {
-        message.channel.send('entra numa call primeiro, animal.');
-    }
+        const dispatcher = connection.play(stream);
+        dispatcher.setVolume(0.25);
+        dispatcher.on('start', () => console.log('começou'));
+        dispatcher.on('finish', () => {
+            queue.shift();
+            if(queue.length > 0){
+                play(message);
+            }else{
+                setTimeout(()=>{
+                    message.member.voice.channel.leave();
+                }, 30000); 
+            }
+        });
+        dispatcher.on('error', console.error);
+    });
 }
