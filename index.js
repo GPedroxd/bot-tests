@@ -18,6 +18,10 @@ client.once('ready', () => {
 	console.log('Ready!');
 });
 
+/*np,setInterval(() => {
+	let channel = client.channels.cache.get("729797123649830912");
+	channel.send('Ta ai fazendo nada. Vai beber agua, arrombado');
+}, 900000);*/
 client.on('guildMemberAdd', async(member)=>{
 	console.log('é');
     let guild = client.guilds.cache.get("619613533407019009");

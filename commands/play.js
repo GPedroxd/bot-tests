@@ -4,10 +4,10 @@ module.exports = {
     'description': 'toca uma musica',
     execute(message, args) {
         if (message.member.voice.channel) {
-            if(queue.length > 0){
+            if (queue.length > 0) {
                 queue.push(args[0]);
-                message.channel.send('Essa musica está na posição ' + (queue.length - 1)  + ' da fila.');
-            }else{
+                message.channel.send('Essa musica está na posição ' + (queue.length - 1) + ' da fila.');
+            } else {
                 queue.push(args[0]);
                 play(message);
             }
@@ -19,7 +19,7 @@ module.exports = {
 const ytdl = require('ytdl-core');
 async function play(message) {
     message.member.voice.channel.join().then(connection => {
-        const stream =  ytdl(queue[0], {
+        const stream = ytdl(queue[0], {
             filter: "audioonly",
             quality: "highestaudio",
         });
@@ -28,12 +28,12 @@ async function play(message) {
         dispatcher.on('start', () => console.log('começou'));
         dispatcher.on('finish', () => {
             queue.shift();
-            if(queue.length > 0){
+            if (queue.length > 0) {
                 play(message);
-            }else{
-                setTimeout(()=>{
+            } else {
+                setTimeout(() => {
                     message.member.voice.channel.leave();
-                }, 30000); 
+                }, 30000);
             }
         });
         dispatcher.on('error', console.error);
