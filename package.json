@@ -12,6 +12,6 @@
     "nodemon": "^2.0.6",
     "opusscript": "^0.0.7",
     "sodium": "^3.0.2",
-    "ytdl-core": "^4.1.6"
+    "ytdl-core": "^4.3.1"
   }
 }
